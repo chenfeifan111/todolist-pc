@@ -35,7 +35,7 @@
               type="password"
               class="input"
               v-model="confirmPassword"
-              :placeholder="currentlyEncrypted ? '输入新密钥或留空移除加密' : '请输入密钥（至少6位）'"
+              :placeholder="currentlyEncrypted ? '输入新密钥或留空移除加密' : '请输入密钥'"
               @keypress.enter="handleSubmit"
               maxlength="50"
             />
@@ -128,24 +128,16 @@ export default {
         }
         
         if (this.showNewPassword || this.confirmPassword) {
-          // 修改密钥或移除加密
-          if (this.confirmPassword && this.confirmPassword.length < 6) {
-            alert('新密钥至少需要6位！');
-            return;
-          }
+          // 修改密钥或移除加密（移除长度限制）
           this.$emit('confirm', this.password, this.confirmPassword || null);
         } else {
           // 仅验证当前密钥，准备修改
           this.showNewPassword = true;
         }
       } else {
-        // 未加密的情况 - 设置新密钥
+        // 未加密的情况 - 设置新密钥（移除长度限制）
         if (!this.confirmPassword) {
           alert('请输入密钥！');
-          return;
-        }
-        if (this.confirmPassword.length < 6) {
-          alert('密钥至少需要6位！');
           return;
         }
         if (this.confirmPassword !== this.confirmPassword2) {
