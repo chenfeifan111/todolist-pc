@@ -312,7 +312,15 @@ export default {
           // 设置新密钥
           this.currentEncryptKey = newKey;
           this.isEncrypted = true;
-          this.$refs.toast.show('加密设置成功', 'success', 3000);
+          this.saveToStorage();
+          this.showEncrypt = false;
+          this.$refs.toast.show('加密设置成功，页面即将刷新', 'success', 2000);
+          
+          // 2秒后刷新页面
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+          return;
         }
         
         this.saveToStorage();
